@@ -1,0 +1,102 @@
+{
+	"name": "insert hobby data",
+	"properties": {
+		"activities": [
+			{
+				"name": "insert_values _for_hobby",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Lookup for employee table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Lookup for employee table').output.value",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "insert_value",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[insert_hobby_values]",
+								"storedProcedureParameters": {
+									"emp_id": {
+										"value": {
+											"value": "@item().empId",
+											"type": "Expression"
+										},
+										"type": "Int32"
+									},
+									"hobby_value": {
+										"value": {
+											"value": "@pipeline().parameters.hobby_values",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "ankit_adf_linked_service",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Lookup for employee table",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from Employee",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			}
+		],
+		"parameters": {
+			"hobby_values": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "using stored procedure"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-10T13:22:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

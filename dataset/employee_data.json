@@ -1,0 +1,18 @@
+{
+	"name": "employee_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ankit_adf_linked_service_blob_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "employeeanddepartment"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

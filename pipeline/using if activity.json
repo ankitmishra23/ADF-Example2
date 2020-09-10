@@ -1,0 +1,86 @@
+{
+	"name": "using if activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "If Condition for employee and department tables",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@pipeline().parameters.state",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Lookup for joined_table",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "select e.empName,d.location from Employee e inner join department d on e.dept_id=d.dept_id where d.location='Delhi'",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": false
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "lookup for employes for salary",
+							"type": "Lookup",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"sqlReaderQuery": "select * from Employee where salary>600000",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"dataset": {
+									"referenceName": "AzureSqlTable1",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": false
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"state": {
+				"type": "bool"
+			}
+		},
+		"folder": {
+			"name": "using different activities"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-10T11:55:48Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

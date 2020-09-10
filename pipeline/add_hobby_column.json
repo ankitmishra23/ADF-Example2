@@ -1,0 +1,33 @@
+{
+	"name": "add_hobby_column",
+	"properties": {
+		"activities": [
+			{
+				"name": "adding hobby column to employee",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[add_hobby_column]"
+				},
+				"linkedServiceName": {
+					"referenceName": "ankit_adf_linked_service",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"folder": {
+			"name": "using stored procedure"
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-09-10T01:37:12Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

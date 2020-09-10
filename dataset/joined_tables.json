@@ -1,0 +1,44 @@
+{
+	"name": "joined_tables",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ankit_adf_linked_service_blob_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "employeeanddepartment"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"empId": {
+					"type": "integer"
+				},
+				"empName": {
+					"type": "string"
+				},
+				"dob": {
+					"type": "string"
+				},
+				"joining_date": {
+					"type": "string"
+				},
+				"dept_id": {
+					"type": "integer"
+				},
+				"salary": {
+					"type": "integer"
+				},
+				"hobby": {
+					"type": "null"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
